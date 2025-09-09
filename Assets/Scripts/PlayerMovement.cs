@@ -20,9 +20,11 @@ public class PlayerMovement : MonoBehaviour
 
     void Update()
     {
+        //Input
         movement.x = Input.GetAxisRaw("Horizontal");
         movement.y = Input.GetAxisRaw("Vertical");
 
+        //Setting up animation
         animator.SetFloat("Horizontal", movement.x);
         animator.SetFloat("Vertical", movement.y);
         animator.SetFloat("Speed", movement.sqrMagnitude);
@@ -30,6 +32,7 @@ public class PlayerMovement : MonoBehaviour
 
     void FixedUpdate()
     {
+        //movement using rigidbody 
         rb.MovePosition(rb.position + movement * movementSpeed * Time.fixedDeltaTime);
     }
 }
