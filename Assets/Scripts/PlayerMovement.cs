@@ -4,6 +4,7 @@ public class PlayerMovement : MonoBehaviour
 {
     [Header("Movement Variables")]
     [SerializeField] float movementSpeed = 5f;
+    [SerializeField] float runSpeed = 10f;
 
     [Header("Input")]
     Vector2 movement;
@@ -32,7 +33,15 @@ public class PlayerMovement : MonoBehaviour
 
     void FixedUpdate()
     {
-        //movement using rigidbody 
-        rb.MovePosition(rb.position + movement * movementSpeed * Time.fixedDeltaTime);
+        if (Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift))
+        {
+            animator.speed = 1.5f;
+            rb.MovePosition(rb.position + movement * runSpeed * Time.fixedDeltaTime);
+        }
+        else
+        {
+            animator.speed = 1f;
+            rb.MovePosition(rb.position + movement * movementSpeed * Time.fixedDeltaTime);
+        }
     }
 }
