@@ -1,10 +1,14 @@
 using UnityEngine;
+using UnityEngine.Scripting.APIUpdating;
 
 public class PlayerMovement : MonoBehaviour
 {
     [Header("Movement Variables")]
     [SerializeField] float movementSpeed = 5f;
     [SerializeField] float runSpeed = 10f;
+
+    [Header("Interaction Variables")]
+    [SerializeField] float interactRange = 5f;
 
     [Header("Input")]
     Vector2 movement;
@@ -21,6 +25,16 @@ public class PlayerMovement : MonoBehaviour
 
     void Update()
     {
+        MovementInput();
+    }
+
+    void FixedUpdate()
+    {
+        Movement();
+    }
+
+    void MovementInput()
+    {
         //Input
         movement.x = Input.GetAxisRaw("Horizontal");
         movement.y = Input.GetAxisRaw("Vertical");
@@ -31,7 +45,7 @@ public class PlayerMovement : MonoBehaviour
         animator.SetFloat("Speed", movement.sqrMagnitude);
     }
 
-    void FixedUpdate()
+    void Movement()
     {
         if (Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift))
         {
