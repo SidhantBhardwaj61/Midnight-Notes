@@ -90,7 +90,7 @@ public class InteractingObject : MonoBehaviour
         //check if this dialogue has choices then display
         foreach (DialogueChoice dialogueChoice in dialogueData.choices)
         {
-            if (dialogueChoice.dialogueIndex == dialogueIndex)
+            if (dialogueChoice.dialogueIndex == dialogueIndex) // if there are choices available at the current index then
             {
                 //display choices
                 DisplayChoices(dialogueChoice);

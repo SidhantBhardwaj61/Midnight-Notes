@@ -7,9 +7,6 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] float movementSpeed = 5f;
     [SerializeField] float runSpeed = 10f;
 
-    [Header("Interaction Variables")]
-    [SerializeField] float interactRange = 5f;
-
     [Header("Input")]
     Vector2 movement;
 

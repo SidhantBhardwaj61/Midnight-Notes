@@ -13,7 +13,6 @@ public class Enemy : MonoBehaviour
     [SerializeField] List<Transform> destinations;
     Animator animator;
     Transform currentDest;
-    float wayPointIndex = 0;
     [SerializeField] GameObject player;
     [SerializeField] LayerMask playerMask;
 
