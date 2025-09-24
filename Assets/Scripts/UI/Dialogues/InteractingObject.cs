@@ -5,11 +5,14 @@ using UnityEngine;
 public class InteractingObject : MonoBehaviour
 {
     public InteractableDialogue dialogueData;
-    public GameObject dialoguePanel;
-    public TMP_Text dialogueText;
-
+    private DialogueController dialogueController;
     private int dialogueIndex;
     private bool isTyping, isDialogueActive;
+
+    void Start()
+    {
+        dialogueController = DialogueController.instance;
+    }
 
     public bool CanInteract()
     {
@@ -37,20 +40,20 @@ public class InteractingObject : MonoBehaviour
     {
         isDialogueActive = true;  // get all required information and start showing dialogue
         dialogueIndex = 0;
-        dialoguePanel.SetActive(true);
+        dialogueController.ShowDialogueUI(true);
 
-        StartCoroutine(TypeLine());
+        ShowCurrentLine();
     }
 
     IEnumerator TypeLine()
     {
         isTyping = true;
-        dialogueText.SetText("");
+        dialogueController.SetDialogueText("");
 
-        foreach (char letter in dialogueData.dialogueLines[dialogueIndex]) 
+        foreach (char letter in dialogueData.dialogueLines[dialogueIndex])
         {
             //show the dialogue in animation
-            dialogueText.text += letter;
+            dialogueController.SetDialogueText(dialogueController.dialogueText.text += letter);
             yield return new WaitForSeconds(dialogueData.typingSpeed);
         }
 
@@ -70,24 +73,69 @@ public class InteractingObject : MonoBehaviour
         if (isTyping)  // if interact is called again then finish the dialogue instantly
         {
             StopAllCoroutines();
-            dialogueText.SetText(dialogueData.dialogueLines[dialogueIndex]);
+            dialogueController.SetDialogueText(dialogueData.dialogueLines[dialogueIndex]);
             isTyping = false;
         }
-        else if (dialogueData.autoProgressLines.Length > ++dialogueIndex) // move to next line if there is one
-        {
-            StartCoroutine(TypeLine());
-        }
-        else
+
+        //clear choices
+        dialogueController.ClearChoices();
+
+        //end dialogue if set as true
+        if (dialogueData.endDialogueLines.Length > dialogueIndex && dialogueData.endDialogueLines[dialogueIndex])
         {
             EndDialogue();
+            return;
         }
+
+        //check if this dialogue has choices then display
+        foreach (DialogueChoice dialogueChoice in dialogueData.choices)
+        {
+            if (dialogueChoice.dialogueIndex == dialogueIndex)
+            {
+                //display choices
+                DisplayChoices(dialogueChoice);
+                return;
+            }
+        }
+
+
+        if (dialogueData.autoProgressLines.Length > ++dialogueIndex) // move to next line if there is one
+            {
+                ShowCurrentLine();
+            }
+            else
+            {
+                EndDialogue();
+            }
+    }
+
+    void DisplayChoices(DialogueChoice choice)
+    {
+        for (int i = 0; i < choice.choices.Length; i++)
+        {
+            int nextIndex = choice.nextDialogueIndex[i];
+            dialogueController.CreateChoiceButton(choice.choices[i], () => ChooseOption(nextIndex));
+        }
+    }
+
+    void ChooseOption(int nextIndex)
+    {
+        dialogueIndex = nextIndex;
+        dialogueController.ClearChoices();
+        ShowCurrentLine();
+    }
+
+    void ShowCurrentLine()
+    {
+        StopAllCoroutines();
+        StartCoroutine(TypeLine());
     }
 
     public void EndDialogue()  // end the dialogue
     {
         StopAllCoroutines();
-        dialoguePanel.SetActive(false);
-        dialogueText.text = "";
+        dialogueController.ShowDialogueUI(false);
+        dialogueController.SetDialogueText("");
         isDialogueActive = false;
     }
 
