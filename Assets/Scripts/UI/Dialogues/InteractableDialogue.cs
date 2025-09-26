@@ -10,6 +10,7 @@ public class InteractableDialogue : ScriptableObject
     public float autoProgressDelay = 1.5f;
 
     public DialogueChoice[] choices;
+    public ItemInformation itemToGive;
 }
 
 [System.Serializable]

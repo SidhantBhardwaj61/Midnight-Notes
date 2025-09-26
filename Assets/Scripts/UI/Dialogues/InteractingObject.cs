@@ -100,13 +100,13 @@ public class InteractingObject : MonoBehaviour
 
 
         if (dialogueData.autoProgressLines.Length > ++dialogueIndex) // move to next line if there is one
-            {
-                ShowCurrentLine();
-            }
-            else
-            {
-                EndDialogue();
-            }
+        {
+            ShowCurrentLine();
+        }
+        else
+        {
+            EndDialogue();
+        }
     }
 
     void DisplayChoices(DialogueChoice choice)
@@ -114,7 +114,21 @@ public class InteractingObject : MonoBehaviour
         for (int i = 0; i < choice.choices.Length; i++)
         {
             int nextIndex = choice.nextDialogueIndex[i];
-            dialogueController.CreateChoiceButton(choice.choices[i], () => ChooseOption(nextIndex));
+            string choiceText = choice.choices[i];
+
+            if (dialogueData.itemToGive != null && dialogueData.itemToGive.canBePicked && choiceText == "Yes")
+            {
+                dialogueController.CreateChoiceButton("Yes", () =>
+                {
+                    InventoryManager.instance.SetItem(dialogueData.itemToGive);
+                    GetComponent<SpriteRenderer>().enabled = false;
+                    ChooseOption(nextIndex);
+                });
+            }
+            else
+            {
+                dialogueController.CreateChoiceButton(choice.choices[i], () => ChooseOption(nextIndex));
+            }
         }
     }
 
@@ -137,6 +151,7 @@ public class InteractingObject : MonoBehaviour
         dialogueController.ShowDialogueUI(false);
         dialogueController.SetDialogueText("");
         isDialogueActive = false;
+        Destroy(gameObject);
     }
 
 

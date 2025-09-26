@@ -14,8 +14,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   dialogueLines:
   - This is just a white box.
-  - There is nothing I can do with it.
-  autoProgressLines: 0101
+  - Pick it up?
+  - Item added to inventory!
+  - Carrying it is just a waste of time anyway
+  autoProgressLines: 0001
+  endDialogueLines: 00000101
   typingSpeed: 0.05
-  dialogueSound: {fileID: 0}
   autoProgressDelay: 1
+  choices:
+  - dialogueIndex: 1
+    choices:
+    - Yes
+    - No
+    nextDialogueIndex: 0200000003000000
+  itemToGive: {fileID: 11400000, guid: a22a7db1a8eaee5459d070511228aafc, type: 2}

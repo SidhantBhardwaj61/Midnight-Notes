@@ -58,6 +58,7 @@ public class Enemy : MonoBehaviour
         animator.SetFloat("Speed", velocity.magnitude);
 
         RaycastHit2D hit = Physics2D.Raycast(transform.position, direction, sightDistance, playerMask);
+        Debug.DrawRay(transform.position, direction , Color.green);
         if (hit.collider != null && hit.collider.CompareTag("Player"))
         {
             isWalking = false;

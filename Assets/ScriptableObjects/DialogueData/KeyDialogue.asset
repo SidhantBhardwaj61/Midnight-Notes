@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3bc4dc2f95b34744580ccd17310066d0, type: 3}
+  m_Name: KeyDialogue
+  m_EditorClassIdentifier: 
+  dialogueLines:
+  - A key...
+  - This might be the department gate key!
+  - Pick it up?
+  - Key added to inventory!
+  - Just pick up the DAMN KEY!!
+  autoProgressLines: 0101000101
+  endDialogueLines: 0000000101
+  typingSpeed: 0.05
+  autoProgressDelay: 1.5
+  choices:
+  - dialogueIndex: 2
+    choices:
+    - Yes
+    - No
+    nextDialogueIndex: 0300000004000000
+  itemToGive: {fileID: 11400000, guid: 5c71bf5135f7a4549a6a8b9a613be884, type: 2}
