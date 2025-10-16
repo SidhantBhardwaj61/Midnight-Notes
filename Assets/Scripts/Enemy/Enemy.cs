@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using JetBrains.Annotations;
 using NUnit.Framework;
+using Unity.VisualScripting;
 using UnityEditor.Rendering;
 using UnityEngine;
 using UnityEngine.AI;
@@ -22,8 +23,8 @@ public class Enemy : MonoBehaviour
     NavMeshAgent ai;
     [SerializeField] float enemySpeed = 5f;
     [SerializeField] float chaseSpeed = 10f;
-    [SerializeField] float sightDistance = 5f;
-    [SerializeField] float catchDistance = 1f;
+    [SerializeField] float sightDistance = 10f;
+    [SerializeField] float catchDistance = 5f;
 
     [Header("WaitingTime")]
     [SerializeField] float idleTime;
@@ -33,6 +34,9 @@ public class Enemy : MonoBehaviour
     [SerializeField] float minChaseTime = 3f;
     [SerializeField] float maxChaseTime = 8f;
     [SerializeField] float jumpscareTime = 2f;
+
+    [Header("Distraction")]
+    [SerializeField] CoinSpawner spawnedCoin;
 
     [Header("RandomVariables")]
     int random1;
@@ -58,7 +62,7 @@ public class Enemy : MonoBehaviour
         animator.SetFloat("Speed", velocity.magnitude);
 
         RaycastHit2D hit = Physics2D.Raycast(transform.position, direction, sightDistance, playerMask);
-        Debug.DrawRay(transform.position, direction , Color.green);
+        Debug.DrawRay(transform.position, direction, Color.green);
         if (hit.collider != null && hit.collider.CompareTag("Player"))
         {
             isWalking = false;
@@ -68,12 +72,30 @@ public class Enemy : MonoBehaviour
             isChasing = true;
         }
 
+        //if the coin is thrown while walking
+        if (!isChasing && spawnedCoin.coinThrown)
+        {
+            animator.speed = 1.5f;
+            ai.ResetPath();
+            ai.destination = spawnedCoin.crossHairLocation;
+            ai.speed = chaseSpeed;
+            float guardToCoinDist = Vector2.Distance(transform.position, spawnedCoin.crossHairLocation);
+            if (guardToCoinDist <= ai.stoppingDistance)
+            {
+                ai.speed = 0;
+                StopCoroutine(IdleRoutine());
+                StartCoroutine(IdleRoutine());
+                isWalking = false;
+                spawnedCoin.coinThrown = false;
+            }
+        }
+
         if (isChasing)
         {
             ai.destination = player.transform.position;
             ai.speed = chaseSpeed;
             animator.speed = 1.5f;
-            float distanceToPlayer = Vector2.Distance(transform.position , player.transform.position);
+            float distanceToPlayer = Vector3.Distance(transform.position, player.transform.position);
             if (distanceToPlayer <= catchDistance)
             {
                 player.SetActive(false);
@@ -82,7 +104,7 @@ public class Enemy : MonoBehaviour
             }
         }
 
-        if (isWalking)
+        if (isWalking && !spawnedCoin.coinThrown)
         {
             animator.speed = 1f;
             ai.destination = destinations[random1].position;
@@ -94,6 +116,17 @@ public class Enemy : MonoBehaviour
                 StartCoroutine(IdleRoutine());
                 isWalking = false;
             }
+        }
+
+    }
+    
+    void OnCollisionEnter2D(Collision2D other)
+    {
+        if (other.gameObject.tag == "Player")
+        {
+            player.SetActive(false);
+            StartCoroutine(DeathRoutine());
+            isChasing = false;
         }
     }
 

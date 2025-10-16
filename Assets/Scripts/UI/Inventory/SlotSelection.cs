@@ -1,12 +1,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class InventorySlot : MonoBehaviour
+public class SlotSelection : MonoBehaviour
 {
-    [SerializeField] List<Transform> inventorySlots;
+    public List<Transform> inventorySlots;
 
-    int wantedSlot = -1;
-    bool isSlotAlreadySelected;
+    public int wantedSlot = -1;
+    public bool isSlotAlreadySelected;
 
     void Update()
     {

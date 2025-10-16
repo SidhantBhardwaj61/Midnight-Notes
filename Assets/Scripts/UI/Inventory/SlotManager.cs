@@ -33,4 +33,9 @@ public class SlotManager : MonoBehaviour
     {
         currentItemInfo = null;
     }
+
+    public string GetItemInfo()
+    {
+        return currentItemInfo.itemName;
+    }
 }

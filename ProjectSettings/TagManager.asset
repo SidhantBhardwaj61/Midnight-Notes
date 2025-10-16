@@ -17,7 +17,7 @@ TagManager:
   - Furniture/Obstacles
   - Items
   - Enemy
-  - 
+  - Playableui
   - 
   - 
   - 
@@ -56,6 +56,9 @@ TagManager:
     locked: 0
   - name: Player
     uniqueID: 2375165467
+    locked: 0
+  - name: PlayableUI
+    uniqueID: 2948217549
     locked: 0
   m_RenderingLayers:
   - Default

@@ -121,7 +121,8 @@ public class InteractingObject : MonoBehaviour
                 dialogueController.CreateChoiceButton("Yes", () =>
                 {
                     InventoryManager.instance.SetItem(dialogueData.itemToGive);
-                    GetComponent<SpriteRenderer>().enabled = false;
+                    gameObject.GetComponent<SpriteRenderer>().enabled = false;
+                    Invoke("DestroyObject" , 3f);
                     ChooseOption(nextIndex);
                 });
             }
@@ -151,6 +152,10 @@ public class InteractingObject : MonoBehaviour
         dialogueController.ShowDialogueUI(false);
         dialogueController.SetDialogueText("");
         isDialogueActive = false;
+    }
+
+    void DestroyObject()
+    {
         Destroy(gameObject);
     }
 
