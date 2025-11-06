@@ -24,9 +24,14 @@ public class SlotManager : MonoBehaviour
         GameObject itemUI = Instantiate(itemPrefab, transform);
         itemUI.GetComponent<Image>().sprite = newItem.itemImage;
 
+        //Set the opacity of the image to 0.5
+        Color c = itemUI.GetComponent<Image>().color;
+        c.a = 0.5f;
+        itemUI.GetComponent<Image>().color = c;
+
         // reset position to center
         RectTransform rt = itemUI.GetComponent<RectTransform>();
-        rt.anchoredPosition = Vector2.zero;
+        rt.anchoredPosition = Vector2.zero - new Vector2(0 , 10f);
     }
 
     public void RemoveItem()

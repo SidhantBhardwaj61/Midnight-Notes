@@ -7,6 +7,8 @@ TagManager:
   - Interactable
   - Interior
   - Exterior
+  - MovingStick
+  - ScoreWall
   layers:
   - Default
   - TransparentFX

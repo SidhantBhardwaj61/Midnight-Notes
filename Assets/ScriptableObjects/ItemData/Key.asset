@@ -14,5 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemPrefab: {fileID: 4890604831485480525, guid: 79d9d546383c4f740a8924d38e444cec, type: 3}
   itemName: Key
-  itemImage: {fileID: 21300000, guid: 89eccc58c7c29284c83aaa41b5aef32b, type: 3}
+  itemImage: {fileID: 1435639686386577671, guid: c5a71e550b13270438388ac11d694ac0, type: 3}
   canBePicked: 1
