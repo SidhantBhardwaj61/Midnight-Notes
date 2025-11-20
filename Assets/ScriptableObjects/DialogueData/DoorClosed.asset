@@ -15,7 +15,9 @@ MonoBehaviour:
   dialogueLines:
   - The door is closed.
   - I need it's key.
-  autoProgressLines: 0001
+  autoProgressLines: 0101
+  endDialogueLines: 0001
   typingSpeed: 0.05
-  dialogueSound: {fileID: 0}
   autoProgressDelay: 1.5
+  choices: []
+  itemToGive: {fileID: 0}

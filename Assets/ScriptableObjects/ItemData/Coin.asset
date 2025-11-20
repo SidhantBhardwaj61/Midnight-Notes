@@ -16,3 +16,4 @@ MonoBehaviour:
   itemName: Coin
   itemImage: {fileID: 7675826601332790545, guid: da5ae25c0f9b7c24ca65e1a109298516, type: 3}
   canBePicked: 1
+  type: Coin

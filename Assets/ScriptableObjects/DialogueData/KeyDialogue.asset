@@ -13,19 +13,18 @@ MonoBehaviour:
   m_Name: KeyDialogue
   m_EditorClassIdentifier: 
   dialogueLines:
-  - A key...
-  - This might be the department gate key!
+  - This must be the department key!
   - Pick it up?
   - Key added to inventory!
-  - Just pick up the DAMN KEY!!
-  autoProgressLines: 0101000101
-  endDialogueLines: 0000000101
+  - Maybe I shouldn't pick it up
+  autoProgressLines: 01000101
+  endDialogueLines: 00000101
   typingSpeed: 0.05
   autoProgressDelay: 1.5
   choices:
-  - dialogueIndex: 2
+  - dialogueIndex: 1
     choices:
     - Yes
     - No
-    nextDialogueIndex: 0300000004000000
+    nextDialogueIndex: 0200000003000000
   itemToGive: {fileID: 11400000, guid: 5c71bf5135f7a4549a6a8b9a613be884, type: 2}

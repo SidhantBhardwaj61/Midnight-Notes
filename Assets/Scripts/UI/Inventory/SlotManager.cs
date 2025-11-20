@@ -6,8 +6,23 @@ public class SlotManager : MonoBehaviour
 {
     public ItemInformation currentItemInfo;
     public GameObject itemPrefab;
-
+    [SerializeField] ImageSlot imageSlot;
     public bool isEmpty = true;
+
+    private void Update() 
+    {
+        //if there is an item
+        if(currentItemInfo != null && imageSlot != null && currentItemInfo.itemName == "Coin")
+        {
+            //display the count
+            transform.GetChild(1).gameObject.SetActive(true);
+        }
+        else
+        {
+            transform.GetChild(1).gameObject.SetActive(false);
+        }
+
+    }
 
     public void SetCurrentItem(ItemInformation newItem)
     {
@@ -17,8 +32,8 @@ public class SlotManager : MonoBehaviour
         }
         currentItemInfo = newItem;
         isEmpty = false;
-        if (transform.childCount > 1)
-            Destroy(transform.GetChild(1).gameObject);
+        if (transform.childCount > 2)
+            Destroy(transform.GetChild(2).gameObject);
 
         // spawn new item prefab as child of this slot
         GameObject itemUI = Instantiate(itemPrefab, transform);

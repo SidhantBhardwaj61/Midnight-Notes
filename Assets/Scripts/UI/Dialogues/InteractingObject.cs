@@ -1,6 +1,7 @@
 using System.Collections;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Rendering.Universal;
 
 public class InteractingObject : MonoBehaviour
 {
@@ -8,6 +9,8 @@ public class InteractingObject : MonoBehaviour
     private DialogueController dialogueController;
     private int dialogueIndex;
     private bool isTyping, isDialogueActive;
+    [SerializeField] Animator playerAnimator;
+    [SerializeField] AudioSource obtainedSFX;
 
     void Start()
     {
@@ -39,6 +42,8 @@ public class InteractingObject : MonoBehaviour
     void StartDialogue()
     {
         isDialogueActive = true;  // get all required information and start showing dialogue
+        PlayerMovement.isPlayerWalkable = false;
+        playerAnimator.SetFloat("Speed", 0);
         dialogueIndex = 0;
         dialogueController.ShowDialogueUI(true);
 
@@ -120,8 +125,14 @@ public class InteractingObject : MonoBehaviour
             {
                 dialogueController.CreateChoiceButton("Yes", () =>
                 {
+                    if(dialogueData.itemToGive.type == "Key")
+                    {
+                        InventoryManager.hasKey = true;
+                    }
                     InventoryManager.instance.SetItem(dialogueData.itemToGive);
+                    obtainedSFX.Play();
                     gameObject.GetComponent<SpriteRenderer>().enabled = false;
+                    gameObject.transform.GetChild(0).GetComponent<Light2D>().enabled = false;
                     Invoke("DestroyObject" , 3f);
                     ChooseOption(nextIndex);
                 });
@@ -150,6 +161,7 @@ public class InteractingObject : MonoBehaviour
     {
         StopAllCoroutines();
         dialogueController.ShowDialogueUI(false);
+        PlayerMovement.isPlayerWalkable = true;
         dialogueController.SetDialogueText("");
         isDialogueActive = false;
     }

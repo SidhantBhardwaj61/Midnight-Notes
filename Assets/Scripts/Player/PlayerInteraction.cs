@@ -3,8 +3,11 @@ using UnityEngine;
 
 public class PlayerInteraction : MonoBehaviour
 {
+    [SerializeField] GameObject passcodeUI;
     private bool canInteract;
+    public static bool isClassroom = false;
     private InteractingObject interactInfo;
+
     void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.tag == "Interactable")
@@ -12,7 +15,19 @@ public class PlayerInteraction : MonoBehaviour
             canInteract = true;
             interactInfo = collision.GetComponent<InteractingObject>();
         }
+
+        if (collision.tag == "ProhibitedArea")
+        {
+            interactInfo = collision.GetComponent<InteractingObject>();
+            interactInfo.Interact();
+        }
+
+        if (collision.tag == "ClassroomGate")
+        {
+            isClassroom = true;
+        }
     }
+
 
     void OnTriggerExit2D(Collider2D collision)
     {
@@ -21,6 +36,12 @@ public class PlayerInteraction : MonoBehaviour
             canInteract = false;
             interactInfo = null;
         }
+        
+        if (collision.tag == "ProhibitedArea")
+        {
+            interactInfo = null;
+        }
+            
     }
 
     void Update()
@@ -29,5 +50,11 @@ public class PlayerInteraction : MonoBehaviour
             {
                 interactInfo.Interact();
             }
+
+        if(isClassroom && Input.GetKeyDown(KeyCode.E))
+        {
+            passcodeUI.SetActive(true);
+            PlayerMovement.isPlayerWalkable = false;
+        }
     }
 }

@@ -42,6 +42,10 @@ public class InventoryDragAndDrop : MonoBehaviour, IBeginDragHandler, IDragHandl
 
         if(dropSlot != null)
         {
+            //swap item information
+            SlotManager dropSlotManager = dropSlot.GetComponent<SlotManager>();
+            SlotManager originalSlotManager = originalSlot.GetComponent<SlotManager>();
+
             //Is a slot under drop point
             if (dropSlot.currentItem != null)
             {
@@ -49,9 +53,16 @@ public class InventoryDragAndDrop : MonoBehaviour, IBeginDragHandler, IDragHandl
                 dropSlot.currentItem.transform.SetParent(originalSlot.transform);
                 originalSlot.currentItem = dropSlot.currentItem;
                 dropSlot.currentItem.GetComponent<RectTransform>().anchoredPosition = Vector2.zero;
+
+                // Swap item data
+                ItemInformation tempInfo = dropSlotManager.currentItemInfo;
+                dropSlotManager.currentItemInfo = originalSlotManager.currentItemInfo;
+                originalSlotManager.currentItemInfo = tempInfo;
             }
             else
             {
+                dropSlotManager.currentItemInfo = originalSlotManager.currentItemInfo;
+                originalSlotManager.currentItemInfo = null;
                 originalSlot.currentItem = null;
             }
 

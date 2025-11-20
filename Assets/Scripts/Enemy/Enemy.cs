@@ -40,6 +40,13 @@ public class Enemy : MonoBehaviour
 
     [Header("RandomVariables")]
     int random1;
+    public static bool isChaseMusicPlaying = false;
+    public static bool isBGPlaying = true;
+
+    [Header("References")]
+    [SerializeField] AudioSource GameOverSFX;
+    [SerializeField] AudioSource chaseMusic;
+    [SerializeField] AudioSource bgMusic;
 
     void Start()
     {
@@ -95,6 +102,13 @@ public class Enemy : MonoBehaviour
             ai.destination = player.transform.position;
             ai.speed = chaseSpeed;
             animator.speed = 1.5f;
+            if(!isChaseMusicPlaying)
+            {
+                bgMusic.Stop();
+                isBGPlaying = false;
+                chaseMusic.Play();
+                isChaseMusicPlaying = true;
+            }
             float distanceToPlayer = Vector3.Distance(transform.position, player.transform.position);
             if (distanceToPlayer <= catchDistance)
             {
@@ -125,6 +139,12 @@ public class Enemy : MonoBehaviour
         if (other.gameObject.tag == "Player")
         {
             player.SetActive(false);
+            if(isChaseMusicPlaying || isBGPlaying)
+            {
+                bgMusic.Stop();
+                chaseMusic.Stop();
+            }
+            GameOverSFX.Play();
             StartCoroutine(DeathRoutine());
             isChasing = false;
         }
@@ -143,6 +163,13 @@ public class Enemy : MonoBehaviour
     {
         chaseTime = Random.Range(minChaseTime, maxChaseTime);
         yield return new WaitForSeconds(chaseTime);
+        if(!isBGPlaying)
+        {
+            chaseMusic.Stop();
+            bgMusic.Play();
+            isChaseMusicPlaying = false;
+            isBGPlaying = true;
+        }
         isWalking = true;
         isChasing = false;
         random1 = Random.Range(0, destinations.Count - 1);

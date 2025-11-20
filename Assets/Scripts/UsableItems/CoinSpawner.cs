@@ -10,6 +10,8 @@ public class CoinSpawner : MonoBehaviour
     [SerializeField] Transform player;
     [SerializeField] AudioSource CoinDropSFX;
     [SerializeField] GameObject timer;
+
+    public static int numberOfCoins = 10;
     public Vector3 crossHairLocation;
 
     GameObject tempCoin;
@@ -22,11 +24,13 @@ public class CoinSpawner : MonoBehaviour
 
     public void SpawnCross()
     {
+        if(numberOfCoins == 0) return;
         if (!crossActive && timer.GetComponent<CoinTimer>().timerActive == false)
         {
             //spawn the coin crosshair and take control from the user
             coinCross = Instantiate(crossHair, player.position, Quaternion.identity);
             coinCrossBoundary = Instantiate(crossHairBoundary, player.position, Quaternion.identity);
+            numberOfCoins--;
 
             //restrict player movement
             player.gameObject.GetComponent<PlayerMovement>().enabled = false;
@@ -66,6 +70,7 @@ public class CoinSpawner : MonoBehaviour
 
     void Update()
     {
+        if(numberOfCoins == 0) return;
         //if the player presses enter
         if (Input.GetKeyDown(KeyCode.Return))
         {

@@ -8,11 +8,13 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] float runSpeed = 10f;
 
     [Header("Input")]
-    Vector2 movement;
+    public Vector2 movement;
 
     [Header("References")]
     Animator animator;
     Rigidbody2D rb;
+
+    public static bool isPlayerWalkable = true;
 
     void Start()
     {
@@ -20,13 +22,26 @@ public class PlayerMovement : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
     }
 
+    public void DisablePlayer()
+    {
+        isPlayerWalkable = false;
+        animator.SetFloat("Speed" , 0);
+    }
+
+    public void EnablePlayer()
+    {
+        isPlayerWalkable = true;
+    }
+
     void Update()
     {
+        if (!isPlayerWalkable) return;
         MovementInput();
     }
 
     void FixedUpdate()
     {
+        if (!isPlayerWalkable) return;
         Movement();
     }
 

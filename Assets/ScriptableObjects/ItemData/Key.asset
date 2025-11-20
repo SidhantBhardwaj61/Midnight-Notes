@@ -16,3 +16,4 @@ MonoBehaviour:
   itemName: Key
   itemImage: {fileID: 1435639686386577671, guid: c5a71e550b13270438388ac11d694ac0, type: 3}
   canBePicked: 1
+  type: Key
