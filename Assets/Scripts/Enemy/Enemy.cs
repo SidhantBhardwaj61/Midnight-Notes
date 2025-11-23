@@ -48,7 +48,7 @@ public class Enemy : MonoBehaviour
     [SerializeField] AudioSource chaseMusic;
     [SerializeField] AudioSource bgMusic;
 
-    void Start()
+    void OnEnable()
     {
         animator = GetComponent<Animator>();
         ai = GetComponent<NavMeshAgent>();
@@ -89,12 +89,16 @@ public class Enemy : MonoBehaviour
             float guardToCoinDist = Vector2.Distance(transform.position, spawnedCoin.crossHairLocation);
             if (guardToCoinDist <= ai.stoppingDistance)
             {
-                ai.speed = 0;
+                spawnedCoin.coinThrown = false;   // Stop distraction first
+
+                // Start idle wait
                 StopCoroutine(IdleRoutine());
                 StartCoroutine(IdleRoutine());
+
+                // Tell AI to wait but allow state to resume after IdleRoutine
                 isWalking = false;
-                spawnedCoin.coinThrown = false;
             }
+
         }
 
         if (isChasing)
@@ -156,6 +160,7 @@ public class Enemy : MonoBehaviour
         yield return new WaitForSeconds(idleTime);
         random1 = Random.Range(0, destinations.Count - 1);
         ai.destination = destinations[random1].position;
+        ai.speed = enemySpeed;
         isWalking = true;
     }
 

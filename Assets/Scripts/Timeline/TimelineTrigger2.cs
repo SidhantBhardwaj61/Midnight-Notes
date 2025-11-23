@@ -7,6 +7,7 @@ public class TimelineTrigger2 : MonoBehaviour
     [SerializeField] PlayableDirector playableDirector;
     [SerializeField] GameObject enemyMain;
     [SerializeField] GameObject tempEnemy;
+    [SerializeField] CoinSpawner coinSpawner;
 
     void OnTriggerEnter2D(Collider2D collision)
     {
@@ -22,6 +23,8 @@ public class TimelineTrigger2 : MonoBehaviour
 
     void OnTimelineFinished(PlayableDirector playableDirector)
     {
+        coinSpawner.crossHairLocation = Vector2.zero;
+        coinSpawner.coinThrown = false;
         enemyMain.SetActive(true);
         Destroy(tempEnemy);
         Destroy(gameObject);
