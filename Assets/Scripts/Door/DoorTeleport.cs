@@ -6,6 +6,8 @@ public class DoorTeleport : MonoBehaviour
     [SerializeField] GameObject player;
     [SerializeField] float exteriorOffset = 3f;
     [SerializeField] float interiorOffset = 1f;
+    [SerializeField] float exteriorSideOffset = 1f;
+    [SerializeField] float interiorSideOffset = 1f;
     Vector2 teleportPos;
 
     void OnEnable()
@@ -18,6 +20,15 @@ public class DoorTeleport : MonoBehaviour
         {
             teleportPos = new Vector2(destination.position.x, destination.position.y + interiorOffset);
         }
+        else if(this.gameObject.tag == "ExteriorSide")
+        {
+            teleportPos = new Vector2(destination.position.x + interiorSideOffset, destination.position.y);
+        }
+        else if(this.gameObject.tag == "InteriorSide")
+        {
+            teleportPos = new Vector2(destination.position.x - exteriorSideOffset, destination.position.y);
+        }
+        
     }
 
     void OnTriggerEnter2D(Collider2D other)

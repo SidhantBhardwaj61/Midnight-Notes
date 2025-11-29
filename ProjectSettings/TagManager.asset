@@ -11,6 +11,8 @@ TagManager:
   - ScoreWall
   - ProhibitedArea
   - ClassroomGate
+  - ExteriorSide
+  - InteriorSide
   layers:
   - Default
   - TransparentFX

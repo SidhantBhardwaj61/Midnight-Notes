@@ -6,6 +6,7 @@ public class PlayerInteraction : MonoBehaviour
     [SerializeField] GameObject passcodeUI;
     private bool canInteract;
     public static bool isClassroom = false;
+    public static bool puzzleSolved = false;
     private InteractingObject interactInfo;
 
     void OnTriggerEnter2D(Collider2D collision)
@@ -41,7 +42,11 @@ public class PlayerInteraction : MonoBehaviour
         {
             interactInfo = null;
         }
-            
+        
+        if (collision.tag == "ClassroomGate")
+        {
+            isClassroom = false;
+        }
     }
 
     void Update()
@@ -51,7 +56,7 @@ public class PlayerInteraction : MonoBehaviour
                 interactInfo.Interact();
             }
 
-        if(isClassroom && Input.GetKeyDown(KeyCode.E))
+        if(isClassroom && Input.GetKeyDown(KeyCode.E) && !puzzleSolved)
         {
             passcodeUI.SetActive(true);
             PlayerMovement.isPlayerWalkable = false;

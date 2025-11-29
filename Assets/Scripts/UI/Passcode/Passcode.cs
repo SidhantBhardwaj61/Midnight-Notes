@@ -10,6 +10,7 @@ public class Passcode : MonoBehaviour
     [SerializeField] AudioSource enableSFX;
     [SerializeField] private TMPro.TMP_Text enteredPassword;
     [SerializeField] string correctPassword;
+    [SerializeField] GameObject classroomTeleport;
 
     void OnEnable()
     {
@@ -35,6 +36,8 @@ public class Passcode : MonoBehaviour
         {
             enteredPassword.text = "CORRECT!";
             correctSFX.Play();
+            PlayerInteraction.puzzleSolved = true;
+            classroomTeleport.SetActive(true);
             Invoke(nameof(Close) , 1f);
         }
         else
