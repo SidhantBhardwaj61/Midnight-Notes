@@ -5,6 +5,7 @@ public class InventoryManager : MonoBehaviour
     public static InventoryManager instance { get; private set; }
     public SlotManager[] slots;
     [SerializeField] public static bool hasKey = false;
+    [SerializeField] public static bool hasNotes = false;
 
     void Awake()
     {

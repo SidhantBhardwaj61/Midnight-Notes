@@ -11,6 +11,8 @@ public class InteractingObject : MonoBehaviour
     private bool isTyping, isDialogueActive;
     [SerializeField] Animator playerAnimator;
     [SerializeField] AudioSource obtainedSFX;
+    [SerializeField] GameObject thirdCutsceneTrigger1;
+    [SerializeField] GameObject thirdCutsceneTrigger2;
 
     void Start()
     {
@@ -129,6 +131,13 @@ public class InteractingObject : MonoBehaviour
                     {
                         InventoryManager.hasKey = true;
                     }
+                    if(dialogueData.itemToGive.type == "Book")
+                    {
+                        InventoryManager.hasNotes = true;
+                        thirdCutsceneTrigger1.SetActive(true);
+                        thirdCutsceneTrigger2.SetActive(true);
+                    }
+                    
                     InventoryManager.instance.SetItem(dialogueData.itemToGive);
                     obtainedSFX.Play();
                     gameObject.GetComponent<SpriteRenderer>().enabled = false;

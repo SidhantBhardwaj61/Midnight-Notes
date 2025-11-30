@@ -13,6 +13,7 @@ TagManager:
   - ClassroomGate
   - ExteriorSide
   - InteriorSide
+  - ClassroomGateInterior
   layers:
   - Default
   - TransparentFX

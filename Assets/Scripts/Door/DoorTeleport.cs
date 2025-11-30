@@ -8,6 +8,7 @@ public class DoorTeleport : MonoBehaviour
     [SerializeField] float interiorOffset = 1f;
     [SerializeField] float exteriorSideOffset = 1f;
     [SerializeField] float interiorSideOffset = 1f;
+    [SerializeField] float classroomOffset = 2f;
     Vector2 teleportPos;
 
     void OnEnable()
@@ -28,6 +29,15 @@ public class DoorTeleport : MonoBehaviour
         {
             teleportPos = new Vector2(destination.position.x - exteriorSideOffset, destination.position.y);
         }
+        else if(this.gameObject.tag == "ClassroomGate")
+        {
+            teleportPos = new Vector2(destination.position.x, destination.position.y - classroomOffset);
+        }
+        else if(this.gameObject.tag == "ClassroomGateInterior")
+        {
+            teleportPos = new Vector2(destination.position.x + classroomOffset, destination.position.y);
+        }
+        
         
     }
 

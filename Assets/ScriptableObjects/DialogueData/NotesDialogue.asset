@@ -29,4 +29,4 @@ MonoBehaviour:
     - Yes
     - No
     nextDialogueIndex: 0400000005000000
-  itemToGive: {fileID: 0}
+  itemToGive: {fileID: 11400000, guid: ef6689d4fb56638499237e1ad3428937, type: 2}

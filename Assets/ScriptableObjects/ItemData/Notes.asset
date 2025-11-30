@@ -15,5 +15,5 @@ MonoBehaviour:
   itemPrefab: {fileID: 5057297501518907108, guid: c409ca04f473f664ba075a6dadaf52b5, type: 3}
   itemName: Notes
   itemImage: {fileID: 21300000, guid: a95458279597fc440b6e688b4d517a71, type: 3}
-  canBePicked: 0
+  canBePicked: 1
   type: Book
